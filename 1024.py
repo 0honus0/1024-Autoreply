@@ -276,7 +276,7 @@ if __name__ == "__main__":
                 sleep(sleeptime)
                 auto.debug('休眠完成')
         except:
-            print('回复失败，重试') 
+            print('回复失败，重试')
     n=auto.getnumber()
     auto.debug('开始时发表帖子:'+m)
     auto.debug('结束时发表帖子:'+n)
