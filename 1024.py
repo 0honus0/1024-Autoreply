@@ -121,7 +121,6 @@ class Autoreply:
             if page.find('下一頁')!=-1:
                 break
             sleep(3)
-        geturl='https://t66y.com/'+self.match[m]
         self.geturl=geturl
         tid=self.match[m][16:len(self.match[m])-5]
         self.tid=tid
