@@ -118,9 +118,9 @@ class Autoreply:
             geturl='https://t66y.com/'+self.match[m]
             page = self.s.post(geturl,headers=self.headers)
             page=page.text.encode('iso-8859-1').decode('gbk')
-            if page.find('下一頁')==-1:
-                sleep(3)
+            if page.find('下一頁')!=-1:
                 break
+            sleep(3)
         geturl='https://t66y.com/'+self.match[m]
         self.geturl=geturl
         tid=self.match[m][16:len(self.match[m])-5]
