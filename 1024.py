@@ -1,7 +1,7 @@
 import requests
 import re
 import random
-import onetimepass as otp
+#import onetimepass as otp
 from time import sleep
 from urllib import parse
 import os
@@ -17,23 +17,23 @@ class Autoreply:
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
     logger.addHandler(ch)
-    loginurl = 'http://t66y.com/login.php'
-    url='http://t66y.com/thread0806.php?fid=7&search=today'
-    posturl='http://t66y.com/post.php?'
-    indexurl='http://t66y.com/index.php'
+    loginurl = 'https://t66y.com/login.php'
+    url='https://t66y.com/thread0806.php?fid=7&search=today'
+    posturl='https://t66y.com/post.php?'
+    indexurl='https://t66y.com/index.php'
     black_list=['htm_data/2003/7/3832698.html','htm_data/1602/7/37458.html','htm_data/1502/7/1331010.html','htm_data/2005/7/2520305.html','htm_data/2005/7/2404767.html']
     s=requests.Session()
     headers={
         'Host': 't66y.com',
         'Proxy-Connection': 'keep-alive',
-        'Referer': 'http://t66y.com/index.php',
+        'Referer': 'https://t66y.com/index.php',
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
     }
     headers1={
         'Host': 't66y.com',
         'Proxy-Connection': 'keep-alive',
-        'Referer': 'http://t66y.com/login.php',
+        'Referer': 'https://t66y.com/login.php',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
     }
     headers2={
@@ -45,10 +45,9 @@ class Autoreply:
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
         }
 
-    def __init__(self,user,password,secret):
+    def __init__(self,user,password):
         self.user= user.encode('gb18030')
         self.password= password
-        self.secret =secret
 
     def login1(self):
         sleep(2)
@@ -58,39 +57,22 @@ class Autoreply:
                 'pwpwd':  self.password,
                 'hideid': '0',
                 'cktime': '0',
-                'forward': 'http://t66y.com/post.php?',
-                'jumpurl': 'http://t66y.com/post.php?',
+                'forward': 'https://t66y.com/post.php?',
+                'jumpurl': 'https://t66y.com/post.php?',
                 'step': '2'
-        }
-        login=self.s.post(self.loginurl,headers=self.headers,data=data)
-        login=login.text.encode('iso-8859-1').decode('gbk')
-        if login.find('登录尝试次数过多')!=-1:
-            Err='登录尝试次数过多,需输入验证码'
-            return Err
-        elif login.find('賬號已開啟兩步驗證')!=-1:
-            Err='賬號已開啟兩步驗證'
-            return Err
-
-    def login2(self):
-        sleep(2)
-        my_token = otp.get_totp(self.secret)
-        data={
-        'step': '2',
-        'cktime': '0',
-        'oneCode': str(my_token)
         }
         login=self.s.post(self.loginurl,headers=self.headers,data=data)
         self.cookies=login.cookies
         login=login.text.encode('iso-8859-1').decode('gbk')
+        if login.find('登录尝试次数过多')!=-1:
+            return '登录尝试次数过多,需输入验证码'
         if login.find('您已經順利登錄')!=-1:
-            res='已經順利登錄'
-            self.s.close()
-            return res
+            return '您已經順利登錄'
 
     def getverwebp(self):
         code=random.uniform(0,1)
         code=round(code,16)
-        vercodeurl='http://t66y.com/require/codeimg.php?'+str(code)
+        vercodeurl='https://t66y.com/require/codeimg.php?'+str(code)
         image=self.s.get(vercodeurl,headers=self.headers1)
         f=open('image.webp','wb')
         f.write(image.content)
@@ -133,7 +115,7 @@ class Autoreply:
     def getonelink(self):
         geturl=''
         m=random.randint(0,len(self.match)-1)
-        geturl='http://t66y.com/'+self.match[m]
+        geturl='https://t66y.com/'+self.match[m]
         self.geturl=geturl
         tid=self.match[m][16:len(self.match[m])-5]
         self.tid=tid
@@ -222,8 +204,7 @@ if __name__ == "__main__":
     suc=False
     user= os.environ["USER"]
     password= os.environ["PASSWORD"]
-    secret =os.environ["SECRET"]
-    auto=Autoreply(user,password,secret)
+    auto=Autoreply(user,password)
 
     while success is None:
         au=auto.login1()
@@ -238,17 +219,14 @@ if __name__ == "__main__":
                 auto.getverwebp()
                 vercode=getcd.getcode()
                 auto.debug(vercode)
-            if auto.login1()=='賬號已開啟兩步驗證':
-                if auto.login2()=='已經順利登錄':
-                    auto.debug('登录成功')
-                    success = True
-                    au=''
+        elif au=='您已經順利登錄':
+            auto.debug('登录成功')
+            success = True
+            au=''
         else:
-            if au=='賬號已開啟兩步驗證':
-                if auto.login2()=='已經順利登錄':
-                    auto.debug('登录成功')
-                    success = True
-                    au=''
+            auto.debug('error')
+            exit()
+            
     m=auto.getnumber()
     auto.gettodaylist()
     #回复
