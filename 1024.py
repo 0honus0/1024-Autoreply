@@ -113,14 +113,20 @@ class Autoreply:
             pass
 
     def getonelink(self):
-        geturl=''
-        m=random.randint(0,len(self.match)-1)
+        while 1:
+            m=random.randint(0,len(self.match)-1)
+            geturl='https://t66y.com/'+self.match[m]
+            page = self.s.post(geturl,headers=self.headers)
+            page=page.text.encode('iso-8859-1').decode('gbk')
+            if page.find('下一頁')==-1:
+                sleep(3)
+                break
         geturl='https://t66y.com/'+self.match[m]
         self.geturl=geturl
         tid=self.match[m][16:len(self.match[m])-5]
         self.tid=tid
         self.match.remove(self.match[m])
-        #print('请求链接是: '+geturl)
+        self.debug('请求链接是: '+geturl)
 
     def browse(self):
         res=requests.get(url=self.geturl,headers=self.headers,cookies=self.cookies)
