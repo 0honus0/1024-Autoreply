@@ -113,14 +113,13 @@ class Autoreply:
             pass
 
     def getonelink(self):
-        while 1:
-            m=random.randint(0,len(self.match)-1)
-            geturl='https://t66y.com/'+self.match[m]
+        for m in range(len(self.match)):
+            geturl = 'https://t66y.com/'+self.match[m]
             page = self.s.post(geturl,headers=self.headers)
-            page=page.text.encode('iso-8859-1').decode('gbk')
+            page = page.text.encode('iso-8859-1').decode('gbk')
             if page.find('下一頁')!=-1:
                 break
-            sleep(3)
+            sleep(2)
         self.geturl=geturl
         tid=self.match[m][16:len(self.match[m])-5]
         self.tid=tid
