@@ -21,7 +21,7 @@ class Autoreply:
     url='https://t66y.com/thread0806.php?fid=7&search=today'
     posturl='https://t66y.com/post.php?'
     indexurl='https://t66y.com/index.php'
-    black_list=['htm_data/2003/7/3832698.html','htm_data/1602/7/37458.html','htm_data/1502/7/1331010.html','htm_data/2005/7/2520305.html','htm_data/2005/7/2404767.html']
+    black_list=['htm_data/2003/7/3832698.html','htm_data/1602/7/37458.html','htm_data/1502/7/1331010.html','htm_data/2102/7/2520305.html','htm_data/2005/7/2404767.html']
     s=requests.Session()
     headers={
         'Host': 't66y.com',
