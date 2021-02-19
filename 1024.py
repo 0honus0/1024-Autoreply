@@ -241,7 +241,7 @@ if __name__ == "__main__":
             auto.browse()
             auto.getreply()
             auto.getmatch()
-            sleeptime=random.randint(1100,1200)
+            sleeptime=random.randint(960, 1024)
             au=auto.postreply()
             if au=='回复成功':
                 auto.debug('回复成功')
