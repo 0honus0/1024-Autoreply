@@ -241,23 +241,28 @@ if __name__ == "__main__":
             auto.browse()
             auto.getreply()
             auto.getmatch()
-            sleeptime=random.randint(960, 1024)
             au=auto.postreply()
             if au=='回复成功':
                 auto.debug('回复成功')
+            elif au=='今日已达上限':
+                auto.debug('回复失败，今日次数已达10次')
+                suc=True
+            else:
+                while 1:
+                    auto.debug('1024限制！！！')
+                    sleep(60)
+                    auto.debug('休眠完成')
+                    au=auto.postreply()
+                    if au=='回复成功':
+                        auto.debug('回复成功')
+                        break
+            if au=='回复成功':
+                sleeptime=random.randint(1080, 1100)
                 n=n+1
                 if n<10:
                     auto.debug('休眠'+str(sleeptime)+'s...')
                     sleep(sleeptime)
                     auto.debug('休眠完成')
-            elif au=='今日已达上限':
-                auto.debug('回复失败，今日次数已达10次')
-                suc=True
-            else:
-                auto.debug('1024限制！！！')
-                auto.debug('休眠'+str(sleeptime)+'s...')
-                sleep(sleeptime)
-                auto.debug('休眠完成')
         except:
             print('回复失败，重试')
     n=auto.getnumber()
