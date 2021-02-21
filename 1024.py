@@ -262,7 +262,7 @@ if __name__ == "__main__":
                         auto.debug('回复成功')
                         break
             if au=='回复成功':
-                sleeptime=random.randint(1080, 1100)
+                sleeptime=random.randint(900,960)
                 n=n+1
                 if n<10:
                     auto.debug('休眠'+str(sleeptime)+'s...')
