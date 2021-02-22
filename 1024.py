@@ -253,21 +253,22 @@ if __name__ == "__main__":
                 auto.debug('回复失败，今日次数已达10次')
                 suc=True
             else:
-                while 1:
+                i = 0
+                while i < 5:
                     auto.debug('1024限制！！！')
                     sleep(60)
-                    auto.debug('休眠完成')
                     au=auto.postreply()
                     if au=='回复成功':
                         auto.debug('回复成功')
                         break
+                    i += 1
+                raise Exception
             if au=='回复成功':
-                sleeptime=random.randint(900,960)
+                sleeptime=random.randint(600, 640)
                 n=n+1
                 if n<10:
                     auto.debug('休眠'+str(sleeptime)+'s...')
                     sleep(sleeptime)
-                    auto.debug('休眠完成')
         except:
             print('回复失败，重试')
     n=auto.getnumber()
