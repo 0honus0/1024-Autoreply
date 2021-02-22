@@ -122,7 +122,7 @@ class Autoreply:
             geturl = 'https://t66y.com/'+self.match[m]
             page = self.s.post(geturl,headers=self.headers)
             page = page.text.encode('iso-8859-1').decode('gbk')
-            if page.find('下一頁')!=-1 and page.find('求片求助貼')==-1 and page.find('Diss')==-1 and page.find('valen')==-1:
+            if page.find('下一頁')!=-1 and page.find('value="1/')!=-1 and page.find('求片求助貼')==-1 and page.find('Diss')==-1 and page.find('valen')==-1:
                 break
             sleep(2)
         self.geturl=geturl
