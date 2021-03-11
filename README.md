@@ -40,7 +40,7 @@ ps:可选两个是识别验证码用的，任选其一即可，也可以都不�
 `from getver1 import Getver` 为 `from getver import Getver`
 
 <h4>2.(1)先点击Actions,同意使用协议。
-
+  。
 (2)然后随便修改任一文件的内容进行一次提交，就可以在Actions里面看见项目运行</h4>
 
 <h4>(可选)3.可以通过`getreply()中的reply与reply_m(0,n)(n设为回复的内容个数-1)`设置回复内容，`sleeptime设置为(1024,2048)之间`，可以根据需要修改。因为Actions一个项目限制6个小时，所以最大值不要超过2048。如果Actions显示运行超过六小时，先自行检查之前是否回复成功，若是，则把2048调整小一点。若不是，请提issues</h4>
