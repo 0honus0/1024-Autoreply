@@ -121,13 +121,12 @@ class Autoreply:
 
         match=re.findall(pat,con)
         self.match=match
-
         try:
             for data in black_list:
                 self.match.remove(data)
         except:
-            auto.debug('移除失败，知道因为啥。。。')
-            pass
+            auto.debug('移除失败，若出现此信息，请立即停止运行该脚本，删除定时任务中的触发，等待更新')
+            os._exit(0)
 
     def getonelink(self):
         geturl=''

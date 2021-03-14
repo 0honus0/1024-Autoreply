@@ -22,7 +22,6 @@ class Getver:
         }
         res=requests.post(url=host,data=json.dumps(data))
         res=res.text
-        m=res.find('result')
-        n=res.find('id')
-        res=res[m+9:n-3]
+        res=json.loads(res)
+        res=res['data']['result']
         return res
