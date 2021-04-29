@@ -6,7 +6,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: '19 20 * * *'
+    - cron: '19 22 * * *'
 
 
 jobs:
